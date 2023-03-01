@@ -12,6 +12,7 @@ $markers = array();
 $result = mysqli_query($conn, "SELECT * FROM markers");
 while ($row = mysqli_fetch_assoc($result)) {
     $markers[] = array(
+        'id'       => $row['id'],
         'latitude' => $row['latitude'],
         'longitude' => $row['longitude'],
         'marker_type' => $row['marker_type'],

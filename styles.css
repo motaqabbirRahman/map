@@ -85,3 +85,15 @@ body {
 #marker-form input[type=submit]:hover {
   background-color: #fcbf49;
 }
+
+.popBtn{
+  background-color: #ffb703;
+  color: #003049;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+}
+.popBtn:hover{
+  background-color: #4BB543;
+  color: aliceblue;
+}

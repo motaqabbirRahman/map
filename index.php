@@ -9,7 +9,7 @@
   <script>
     // Initialize map and marker variable
     var map;
-    var marker;
+    var marker; 
 
     function initMap() {
       // Set default map center
@@ -20,7 +20,33 @@
         zoom: 8,
         center: center
       });
-       
+        
+
+       // Define a new marker icon with a green color
+        var yellowMarkerIcon = {
+          url: 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png'
+        };
+
+        // Retrieve markers from the server and add them to the map
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'get_markers.php');
+        xhr.onload = function() {
+          if (xhr.status === 200) {
+            var markers = JSON.parse(xhr.responseText);
+            markers.forEach(function(marker) {
+              new google.maps.Marker({
+                position: {lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)},
+                map: map,
+                icon: yellowMarkerIcon
+              });
+            });
+          } else {
+            console.error('Error retrieving markers from server');
+          }
+        };
+        xhr.send();
+      
+
       // Add click event listener to map
       map.addListener('click', function(event) {
         // If marker already exists, remove it from the map
@@ -35,8 +61,7 @@
           title: 'New marker'
         });
 
-        // Add marker to map
-  			marker.setMap(map);
+        marker.setMap(map);
 			
         // Show info window when marker is clicked
         marker.addListener('click', function() {
@@ -59,6 +84,7 @@
 	  
     }
   </script>
+
 </head>
 <body onload="initMap()">
   <!-- Add map container -->
@@ -74,6 +100,7 @@
   <div id="marker-form">
     <form method="post" action="save_marker.php">
       <input type="hidden" id="latitude" name="latitude" required>
+      <input type="hidden" id="status" name="status" value="pending" required>
       <input type="hidden" id="longitude" name="longitude" required>
 
 	  <label for="marker_type" style="color:#003049;">Marker type:</label>

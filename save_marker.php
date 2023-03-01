@@ -16,11 +16,12 @@ $latitude = $_POST['latitude'];
 $longitude = $_POST['longitude'];
 $marker_info = $_POST['marker_info'];
 $marker_type = $_POST['marker_type'];
+$status = $_POST['status'];
 
 // Insert data into markers table
-$sql = "INSERT INTO markers (latitude, longitude, marker_info, marker_type) VALUES ($latitude, $longitude, '$marker_info', '$marker_type')";
+$sql = "INSERT INTO markers (latitude, longitude, marker_info, marker_type, status) VALUES ($latitude, $longitude, '$marker_info', '$marker_type', '$status')";
 if (mysqli_query($conn, $sql)) {
-  $msg = "Marker saved successfully";
+  $msg = "Marker saved successfully!!!";
   header("Location: index.php?msg=".urlencode($msg));
   exit();
 } else {
