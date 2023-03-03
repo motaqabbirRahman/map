@@ -15,76 +15,40 @@ body {
 
 
 #success-msg{
-  position: absolute;
-  top: 15px;
+  position: fixed;
+  top: 5px;
   left: 50%;
-  transform: translateX(-50%);
+  width: 300px;
+  background-color: #4BB543;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   padding: 10px;
-  background-color: #ffb703;
-  color: #003049;
-  border-radius: 5px;
-  display: block;
+  transform: translateX(-50%);
 }
 
 #map {
-  height: 80%;
-  width: 80%;
-  display: block;
-  margin: 0 auto;
+  height: 500px;
+  width: 100%; /* sets the width to the full width of the parent container */
+  position: relative; /* sets the position property to relative */
+  margin-bottom: 0px; /* adds a margin to the bottom of the div */
+  border: 1px solid black; /* adds a border to the div */
+  box-sizing: border-box; /* includes the border in the total height of the div */
+}
+#flex-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: calc(100vh - 500px - 0px); /* sets the height to the remaining space */
+  background-color: #f1f1f1; /* sets a background color */
 }
 
-
-#marker-form {
-  background-color: #fff;
+.flex-item {
+  flex-basis: 100%;
+  height: 100%;
+  background-color: #003049;
   border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-  margin: 20px auto;
-  max-width: 500px;
-  padding: 20px;
-  display: none;
+  box-sizing: border-box;
 }
 
-#marker-form label {
-  display: block;
-  font-size: 16px;
-  font-weight: bold;
-  margin-bottom: 10px;
-}
-
-#marker-form input[type=text],
-#marker-form textarea {
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  font-size: 16px;
-  padding: 5px;
-  width: 98%;
-  margin-bottom: 10px;
-}
-
-#marker-form select {
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  font-size: 16px;
-  padding: 5px;
-  width: 100%;
-  margin-bottom: 10px;
-}
-
-#marker-form input[type=submit] {
-  background-color: #ffb703;
-  border: none;
-  color: #003049;
-  cursor: pointer;
-  font-size: 16px;
-  padding: 10px;
-  width: 100%;
-  border-radius: 5px;
-}
-
-#marker-form input[type=submit]:hover {
-  background-color: #fcbf49;
-}
 
 .popBtn{
   background-color: #ffb703;
@@ -97,3 +61,170 @@ body {
   background-color: #4BB543;
   color: aliceblue;
 }
+
+.dltBtn{
+  background-color: #d62828;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  padding: 5px;
+}
+.dltBtn:hover{
+  background-color: gainsboro;
+  color: #003049;
+}
+
+#adminLogin{
+    width: 300PX;
+    padding: 10px;
+    border-radius: 15PX;
+    font-size: 15px;
+}
+#loginButton:hover{
+    background-color: var(--hovercolor);
+}
+
+.admin_login{
+    border: 2px solid black;
+    width: 300px;
+    height: 300px;
+    padding: 20px;
+    margin: auto ;
+    margin-top: 150px;
+    text-align: center;
+    /* box-shadow: 0px 10px 30px 1px rgba(0, 0, 255, .2) ; */
+    box-shadow: inset 1em 0em var(--background);
+    border: none;
+    border-radius: 15px;
+    background-color: #003049;
+}
+input[type="text"], input[type="password"]{
+    margin: 20px 0  ;
+    width: 100%;
+    box-sizing: border-box;
+    border: var(--shadow);
+    box-shadow: 1px 2px 10px 2px rgba(0, 0, 255, .2) ; 
+    border-radius: 15px;
+    padding: 10px;
+}
+input[type="submit"], input[type="button"]{
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: var(--maincolor);
+    color: var(--textcolor);
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#adminLogin{
+    width: 300PX;
+    padding: 10px;
+    border-radius: 15PX;
+    font-size: 15px;
+}
+#adminLogin:hover{
+    background-color: var(--hovercolor);
+}
+
+#nav-box {
+  position: fixed;
+  top: 5px;
+  left: 50%;
+  width: 300px;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  transform: translateX(-50%);
+}
+
+/* Styles for the welcome message */
+#welcome-msg {
+  margin-bottom: 5px;
+  color: #003049;
+  font-weight: bold;
+  margin-right: 10px;
+}
+#add-marker-msg {
+  margin-bottom: 5px;
+  background-color: none;
+  color: #003049;
+  font-weight: bold;
+}
+
+#logout-btn {
+  background-color: #f77f00;
+  padding: 5px;
+  color: white;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 5px;
+}
+#logout-btn:hover{
+  background-color: #d62828;
+}
+#nav-box > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#nav-box > div > #logo{
+  background-color: #003049;
+  padding: 0 20px;
+}
+
+.add-marker-form{
+  display: flex;
+  flex-direction: column;
+  /* align-items: center;
+  justify-content: center; */
+  margin-top: 2px;
+  padding: 30px;
+  border: 2px solid #003049;
+   max-width: 400px;
+}
+
+#flex-item-mid{
+   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+select{
+  padding: 5px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  width: 100%;
+  max-width: 400px;
+}
+textarea{
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  margin-bottom: 20px;
+  width: 90%;
+  max-width: 400px;
+}
+label {
+  margin-bottom: 10px;
+  color: black;
+  background-color: red;
+}
+
+input[type="submit"] {
+  background-color: #ffb703;
+  color: #003049;
+  padding: 10px 5px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+input[type="submit"]:hover {
+  background-color: #fcbf49;
+  color: #003049;
+}
+

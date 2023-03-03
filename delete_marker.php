@@ -11,17 +11,17 @@ if (!$conn) {
     die('Connection failed: ' . mysqli_connect_error());
 }
 
-// Get the marker ID from the AJAX request
-$markerId = $_POST['marker_id'];
 
-// Update the marker status in the database
-$sql = "UPDATE markers SET status = 'approved' WHERE id = '$markerId'";
+parse_str(file_get_contents("php://input"), $deleteVars);
+$markerId = $deleteVars['marker_id'];
+
+// Delete the marker from the database
+$sql = "DELETE FROM markers WHERE id = '$markerId'";
 if (mysqli_query($conn, $sql)) {
-    echo "Marker approved successfully";
+    echo "Marker deleted successfully";
 } else {
-    echo "Error approving marker: " . mysqli_error($conn);
+    echo "Error deleting marker: " . mysqli_error($conn);
 }
-
 
 mysqli_close($conn);
 ?>

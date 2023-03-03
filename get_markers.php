@@ -16,7 +16,8 @@ while ($row = mysqli_fetch_assoc($result)) {
         'latitude' => $row['latitude'],
         'longitude' => $row['longitude'],
         'marker_type' => $row['marker_type'],
-        'marker_info' => $row['marker_info']
+        'marker_info' => $row['marker_info'],
+        'status'   => $row['status']
     );
 }
 
