@@ -1,10 +1,7 @@
 <?php
 // Connect to database
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$dbname = 'fire_map';
-$conn = mysqli_connect($host, $user, $pass, $dbname);
+require 'connection.inc.php';
+
 
 // Check connection
 if (!$conn) {

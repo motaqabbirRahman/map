@@ -15,91 +15,153 @@ if(!isset($_SESSION['adminLoggedin']) || $_SESSION['adminLoggedin']!=true){
   <!-- Add map library -->
   <script src="https://maps.googleapis.com/maps/api/js?language=en&key=AIzaSyD93cHVgv78v7---19ZQtimRvVpqi7t_M0"></script>
   <link rel="stylesheet" href="styles.css" class="style">
+  <script src="test.js"></script>
 
   <script>
     // Initialize map and marker variable
     var map;
-    var marker; 
+    var marker;
+    var markers = []; 
 
-    function initMap() {
+function initMap() {
       // Set default map center
-     // Define the map and default marker icon
-            var map = new google.maps.Map(document.getElementById('map'), {
-            center: {lat: 37.7739, lng: -122.4194},
-            zoom: 8
-            });
-            var yellowMarkerIcon = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
-            var iconSize = new google.maps.Size(15, 15);
+      // Define the map and default marker icon
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: 37.7739, lng: -122.4194},
+        zoom: 8
+      });
+
+      var yellowMarkerIcon = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+      var iconSize = new google.maps.Size(15, 15);
+
+  // Retrieve markers from the server and add them to the map
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', 'get_markers.php');
+  xhr.onload = function() {
+      if (xhr.status === 200) {
+          var markerData = JSON.parse(xhr.responseText);
+          markerData.forEach(function(marker) {
+              var iconUrl;
+              var iconSize = new google.maps.Size(40, 40);
+              if (marker.status == 'approved') {
+                  if (marker.marker_type == 'fire') {
+                      iconUrl = 'img/fire.png';
+                  } else if (marker.marker_type == 'fire_extinguisher') {
+                      iconUrl = 'img/fire-extinguisher.png';
+                  } else if (marker.marker_type == 'fire_station') {
+                      iconUrl = 'img/fire-station.png';
+                  } else {
+                      iconUrl = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
+                  }
+              } else {
+                  iconUrl = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
+              }
+              var newMarker = new google.maps.Marker({
+                  position: {
+                      lat: parseFloat(marker.latitude),
+                      lng: parseFloat(marker.longitude)
+                  },
+                  map: map,
+                  icon: {
+                      url: iconUrl,
+                      scaledSize: iconSize
+                  }
+              });
+              newMarker.id = marker.id;
+              newMarker.marker_info = marker.marker_info;
+              newMarker.status = marker.status;
+              newMarker.marker_type = marker.marker_type;
+              markers.push(newMarker); 
+              newMarker.addListener('click', function() {
+                  var infoWindow = createInfoWindow(newMarker);
+                  infoWindow.open(map, newMarker);
+              });
+          });
+          
+      } else {
+          console.error('Error retrieving markers from server');
+      }
+  };
+  xhr.send();
+
+        function showMarkersByType(type) {
+      markers.forEach(function(marker) {
+        if ((marker.marker_type === type || type === null) && (type === null || marker.status === 'approved')) {
+  
+              marker.setMap(map);
             
-            // Retrieve markers from the server and add them to the map
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'get_markers.php');
-            xhr.onload = function() {
-            if (xhr.status === 200) {
-                var markers = JSON.parse(xhr.responseText);
-                markers.forEach(function(marker) {
-                //   console.log('Marker type:', marker.marker_type);
-                //   console.log('Status:', marker.status);
-                
-                  var iconUrl;
-                    var iconSize = new google.maps.Size(40, 40);
-                    if (marker.status == 'approved') {
-                        if (marker.marker_type == '🔥') {
-                            iconUrl = 'img/fire.png';
-                        } else if (marker.marker_type == '🧯') {
-                            iconUrl = 'img/fire-extinguisher.png';
-                        } else if (marker.marker_type == '🚒') {
-                            iconUrl = 'img/fire-station.png';
-                        } else {
-                            iconUrl = 'http://maps.google.com/mapfiles/ms/icons/blue-dot.png';
-                        }
-                    } else {
-                        iconUrl = 'http://maps.google.com/mapfiles/ms/icons/yellow-dot.png';
-                    }
-                    var newMarker = new google.maps.Marker({
-                        position: {lat: parseFloat(marker.latitude), lng: parseFloat(marker.longitude)},
-                        map: map,
-                        icon: {
-                            url: iconUrl,
-                            scaledSize: iconSize
-                        }
-                  });
+          } else {
+              if (marker.map !== null) {
+                  marker.setMap(null);
+              }
+          }
+      });
+  }
 
 
+            // Create a button to show only fire markers
+    var fireButton = document.createElement('button');
+    fireButton.textContent = 'fire';
+    fireButton.addEventListener('click', function() {
+        showMarkersByType('fire');
+    });
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fireButton);
 
-                
-                newMarker.id = marker.id;
-                newMarker.status = marker.status;
-                newMarker.marker_info = marker.marker_info; 
-                newMarker.addListener('click', function() {
-                    var infoWindow = createInfoWindow(newMarker);
-                    infoWindow.open(map, newMarker);
-                });
-                });
-            } else {
-                console.error('Error retrieving markers from server');
+    // Create a button to show only fire station markers
+    var fireStationButton = document.createElement('button');
+    fireStationButton.textContent = 'fire station';
+    fireStationButton.addEventListener('click', function() {
+        showMarkersByType('fire_station');
+    });
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fireStationButton);
+
+    // Create a button to show only fire extinguisher markers
+    var fireExtinguisherButton = document.createElement('button');
+    fireExtinguisherButton.textContent = 'fire extinguisher';
+    fireExtinguisherButton.addEventListener('click', function() {
+        showMarkersByType('fire_extinguisher');
+    });
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(fireExtinguisherButton);
+
+    // Create a button to show all markers
+    var allMarkersButton = document.createElement('button');
+    allMarkersButton.textContent = 'Show all';
+    allMarkersButton.addEventListener('click', function() {
+        showMarkersByType(null);
+    });
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(allMarkersButton);
+
+
+   // Create a button to show pending requests
+var pendingButton = document.createElement('button');
+pendingButton.textContent = 'Pending Requests';
+pendingButton.addEventListener('click', function() {
+    // Iterate over all markers and show only the ones that have a "pending" status
+    markers.forEach(function(marker) {
+        if (marker.status === 'pending') {
+            marker.setMap(map);
+        } else {
+            if (marker.map !== null) {
+                marker.setMap(null);
             }
-            };
-            xhr.send();
+        }
+    });
+});
+map.controls[google.maps.ControlPosition.TOP_RIGHT].push(pendingButton); 
 
-        // function createInfoWindow(marker) {
-        //     var contentString = '<div><p style="color:black;">Marker info: ' + marker.id + '</p><button class="popBtn" onclick="approveMarker(\'' + marker.id + '\')">Approve</button></div>';
-        //     var infoWindow = new google.maps.InfoWindow({
-        //         content: contentString
-        //     });
-        //     return infoWindow;
-        // }
-        //  function createInfoWindow(marker) {
-        //     var contentString = '<div><p style="color:black;">Marker info: ' + marker.id + '</p>';
-        //         if (marker.status !== 'approved') {
-        //             contentString += '<button class="popBtn" onclick="approveMarker(\'' + marker.id + '\')">Approve</button>';
-        //         }
-        //         contentString += '</div>';
-        //         var infoWindow = new google.maps.InfoWindow({
-        //             content: contentString
-        //         });
-        //         return infoWindow;
-        //     }
+
+
+         function createInfoWindow(marker) {
+            var contentString = '<div><p style="color:black;">Marker info: ' + marker.id + '</p>';
+                if (marker.status !== 'approved') {
+                    contentString += '<button class="popBtn" onclick="approveMarker(\'' + marker.id + '\')">Approve</button>';
+                }
+                contentString += '</div>';
+                var infoWindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+                return infoWindow;
+            }
        // Keep track of the currently open info window
             var openInfoWindow = null;
             function createInfoWindow(marker) {
@@ -191,17 +253,12 @@ function deleteMarker(id) {
 		}
     ?>
 
-
           <div id="nav-box">
             <?php
                 if(isset($_SESSION['username'])){
-                    // display the username and logout option inside a box
-                    // echo '<div id="welcome-msg">' . $_SESSION['username'] . '</div>';
-                    // echo '<div><a id="logout-btn" href="admin_logout.php">Logout</a></div>';
-                    // echo '<div id="nav-box">'
+  
                 echo '<div>';
                     echo '<span id="welcome-msg">' . $_SESSION['username'] . '</span>';
-                     echo '<span id="logo">' . "🔥" . '</span>';
                     echo '<a href="admin_logout.php" id="logout-btn">Logout</a>';
                 echo '</div>';
 
@@ -209,7 +266,10 @@ function deleteMarker(id) {
             ?>
         </div>
         <div style="margin-left: 220px; margin-top: 50px;">
-            <!-- the rest of your website content goes here -->
+
+
+
+ <!-- the rest of your website content goes here -->
         </div>
 
 

@@ -8,9 +8,10 @@
     --darkcolor:#d62828;
 }
 body {
+    padding: 0;
+    margin: 0;
     font-family: "Sofia", sans-serif;
     color: var(--textcolor);
-    margin: 0px;
 }
 
 
@@ -53,7 +54,6 @@ body {
 .popBtn{
   background-color: #ffb703;
   color: #003049;
-  border-radius: 5px;
   border: none;
   padding: 5px;
 }
@@ -65,7 +65,6 @@ body {
 .dltBtn{
   background-color: #d62828;
   color: #fff;
-  border-radius: 5px;
   border: none;
   padding: 5px;
 }
@@ -77,7 +76,6 @@ body {
 #adminLogin{
     width: 300PX;
     padding: 10px;
-    border-radius: 15PX;
     font-size: 15px;
 }
 #loginButton:hover{
@@ -95,16 +93,14 @@ body {
     /* box-shadow: 0px 10px 30px 1px rgba(0, 0, 255, .2) ; */
     box-shadow: inset 1em 0em var(--background);
     border: none;
-    border-radius: 15px;
     background-color: #003049;
 }
-input[type="text"], input[type="password"]{
-    margin: 20px 0  ;
+input[type="password"], input[type="text"]{
+    margin: 3px 0  ;
     width: 100%;
     box-sizing: border-box;
-    border: var(--shadow);
-    box-shadow: 1px 2px 10px 2px rgba(0, 0, 255, .2) ; 
-    border-radius: 15px;
+    /* border: var(--shadow); */
+    /* box-shadow: 1px 2px 10px 2px rgba(0, 0, 255, .2) ;  */
     padding: 10px;
 }
 input[type="submit"], input[type="button"]{
@@ -113,14 +109,12 @@ input[type="submit"], input[type="button"]{
     background-color: var(--maincolor);
     color: var(--textcolor);
     border: none;
-    border-radius: 5px;
     cursor: pointer;
 }
 
 #adminLogin{
     width: 300PX;
     padding: 10px;
-    border-radius: 15PX;
     font-size: 15px;
 }
 #adminLogin:hover{
@@ -158,7 +152,6 @@ input[type="submit"], input[type="button"]{
   color: white;
   text-align: center;
   text-decoration: none;
-  border-radius: 5px;
 }
 #logout-btn:hover{
   background-color: #d62828;
@@ -179,9 +172,6 @@ input[type="submit"], input[type="button"]{
   /* align-items: center;
   justify-content: center; */
   margin-top: 2px;
-  padding: 30px;
-  border: 2px solid #003049;
-   max-width: 400px;
 }
 
 #flex-item-mid{
@@ -191,17 +181,26 @@ input[type="submit"], input[type="button"]{
 }
 select{
   padding: 5px;
-  font-size: 16px;
-  border-radius: 4px;
   border: 1px solid #ccc;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   width: 100%;
   max-width: 400px;
+  background-color: #fff;
+  border-radius: 2px;
+  box-shadow: 0 0 2px rgb(204, 204, 204);
+  font-size: 14px;
+  color: #474747;
+  height: 30px;
+  text-align: left
 }
+
+option:hover{
+                box-shadow: 0 0 10px 100px #FED20F inset;
+                transition: all .2s ease-in-out;
+            }
 textarea{
   padding: 10px;
   font-size: 16px;
-  border-radius: 4px;
   border: 1px solid #ccc;
   margin-bottom: 20px;
   width: 90%;
@@ -210,7 +209,7 @@ textarea{
 label {
   margin-bottom: 10px;
   color: black;
-  background-color: red;
+  /* background-color: red; */
 }
 
 input[type="submit"] {
@@ -218,7 +217,6 @@ input[type="submit"] {
   color: #003049;
   padding: 10px 5px;
   border: none;
-  border-radius: 4px;
   font-size: 16px;
   cursor: pointer;
 }
@@ -228,3 +226,147 @@ input[type="submit"]:hover {
   color: #003049;
 }
 
+/* Add styles to the button */
+button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  color: #333;
+  font-size: 17px;
+  padding: 6px 12px;
+  margin-top: 7px;
+  margin-right: 5px;
+  height: 42px;
+}
+
+/* Add hover effect to the button */
+button:hover {
+  background-color: #f1f1f1;
+}
+
+#marker_info label {
+
+    width: 20px;
+    margin-right: 10px;
+    text-align: right;
+  }
+
+  #marker_info input {
+    margin: 2px 0  ;
+    width: 100%;
+    box-sizing: border-box;
+  
+    padding: 10px;
+  }
+
+  
+
+/* input[type=search]{
+width: 300px;
+height: 40px;
+font-size: 16px;
+padding: 0px 20px 0px 40px;
+border-radius: 0px;
+outline: none;
+border: solid gray 2px;
+} */
+
+
+
+.form{
+    
+    transform: translate(-50%, -50%);
+    transition: all 1s;
+     width: 200px;
+    height: 42px;
+    background: red;
+    box-sizing: border-box;
+  
+    padding: 5px;
+    
+}
+
+input[type="search"]{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;;
+    height: 42px;
+    line-height: 30px;
+    outline: 0;
+    border: 0;
+    display: block;
+    font-size: 1em;
+    padding: 0 20px;
+
+}
+
+.fa{
+    box-sizing: border-box;
+    padding: 10px;
+    width: 42.5px;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #07051a;
+    text-align: center;
+    font-size: 1.2em;
+    transition: all 1s;
+}
+
+/* .form:hover,
+.form:valid{
+    width: 200px;
+    cursor: pointer;
+} */
+
+/* .form:hover input,
+.form:valid input{
+    display: block;
+} */
+
+.form:hover .fa,
+.form:valid .fa{
+    background: #FED20F;
+    color: #07051a;
+}
+
+#search-bar {
+  margin-top: 15.5px;
+  position: fixed;
+  top: 5px;
+  left: 16.2%;
+  float: right;
+  margin-right: 10px;
+  z-index: 0;
+  padding: 10px;
+}
+
+#nav-box:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+  .search-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  .search-btn:hover{
+    background: none;
+  }
+  
+  #locationSelect{
+    float: left;
+    margin-right: 10px;
+    position: fixed;
+    top: 9px;
+    left: 23%; 
+    width: 100px;
+    height: 43px;
+    background-color: white;
+    padding: 10px;
+     z-index: 1;
+    /* transform: translateX(-460%);  */
+  }
