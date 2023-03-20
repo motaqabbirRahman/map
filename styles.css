@@ -121,16 +121,7 @@ input[type="submit"], input[type="button"]{
     background-color: var(--hovercolor);
 }
 
-#nav-box {
-  position: fixed;
-  top: 5px;
-  left: 50%;
-  width: 300px;
-  background-color: rgba(255, 255, 255, 0.5);
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-  padding: 10px;
-  transform: translateX(-50%);
-}
+
 
 /* Styles for the welcome message */
 #welcome-msg {
@@ -193,11 +184,14 @@ select{
   height: 30px;
   text-align: left
 }
-
+option{
+  font-size: 1rem;
+}
 option:hover{
                 box-shadow: 0 0 10px 100px #FED20F inset;
                 transition: all .2s ease-in-out;
             }
+
 textarea{
   padding: 10px;
   font-size: 16px;
@@ -370,3 +364,78 @@ input[type="search"]{
      z-index: 1;
     /* transform: translateX(-460%);  */
   }
+
+
+   .fa-sign-out {
+        font-size: 23PX; 
+        color: #f1f1f1;/* Change the value as per your requirement */
+    }
+
+
+#nav-box {
+  position: fixed;
+  top: 6px;
+  left: 99%;
+  width: 30px;
+  padding: 0px;
+  transform: translateX(-2070%);
+}
+
+#nav-box .logout-popup {
+  position: absolute;
+  transform: translateX(-5%);
+  width: 120px;
+  z-index: 1;
+  display: none;
+}
+#nav-box:hover .logout-popup {
+  display: block;
+}
+
+#nav-box img {
+  width: 150%;
+  height: 150%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+/* CSS */
+.lg-btn {
+  display: inline-flex;
+  padding: 10px 40px 10px 10px;
+  background-color: #003049;
+  color: #f1f1f1;
+  border: none;
+  text-decoration: none;
+  font-size: 4rem;
+  cursor: pointer;
+}
+
+.lg-btn:hover {
+  background-color: #474747;
+  color: #07051a;
+}
+
+.lg-btn a {
+  display: inline-flex;
+  align-items: left;
+  justify-content: left;
+  text-decoration: none;
+  color: #fff;
+  font-size: 1rem;
+}
+
+.lg-btn a i {
+  margin-right: 10px;
+  margin-top: 5px;
+  display: inline;
+}
+#nav-bx {
+  position: fixed;
+  top: 5px;
+  left: 50%;
+  width: 300px;
+  background-color: rgba(255, 255, 255, 0.5);
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+  padding: 10px;
+  transform: translateX(-50%);
+}

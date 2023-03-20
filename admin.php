@@ -11,9 +11,12 @@ if(!isset($_SESSION['adminLoggedin']) || $_SESSION['adminLoggedin']!=true){
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Map Marker Form</title>
+  <title>admin</title>
   <!-- Add map library -->
   <script src="https://maps.googleapis.com/maps/api/js?language=en&key=AIzaSyD93cHVgv78v7---19ZQtimRvVpqi7t_M0"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/duotone.css" integrity="sha384-R3QzTxyukP03CMqKFe0ssp5wUvBPEyy9ZspCB+Y01fEjhMwcXixTyeot+S40+AjZ" crossorigin="anonymous"/>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/fontawesome.css" integrity="sha384-eHoocPgXsiuZh+Yy6+7DsKAerLXyJmu2Hadh4QYyt+8v86geixVYwFqUvMU8X90l" crossorigin="anonymous"/>
   <link rel="stylesheet" href="styles.css" class="style">
   <script src="test.js"></script>
 
@@ -99,9 +102,9 @@ function initMap() {
   }
 
 
-            // Create a button to show only fire markers
+    // Create a button to show only fire markers
     var fireButton = document.createElement('button');
-    fireButton.textContent = 'fire';
+    fireButton.textContent = 'Fire';
     fireButton.addEventListener('click', function() {
         showMarkersByType('fire');
     });
@@ -133,69 +136,59 @@ function initMap() {
 
 
    // Create a button to show pending requests
-var pendingButton = document.createElement('button');
-pendingButton.textContent = 'Pending Requests';
-pendingButton.addEventListener('click', function() {
-    // Iterate over all markers and show only the ones that have a "pending" status
-    markers.forEach(function(marker) {
-        if (marker.status === 'pending') {
-            marker.setMap(map);
-        } else {
-            if (marker.map !== null) {
-                marker.setMap(null);
+    var pendingButton = document.createElement('button');
+    pendingButton.textContent = 'Pending Requests';
+    pendingButton.addEventListener('click', function() {
+        // Iterate over all markers and show only the ones that have a "pending" status
+        markers.forEach(function(marker) {
+            if (marker.status === 'pending') {
+                marker.setMap(map);
+            } else {
+                if (marker.map !== null) {
+                    marker.setMap(null);
+                }
             }
-        }
+        });
     });
-});
-map.controls[google.maps.ControlPosition.TOP_RIGHT].push(pendingButton); 
+    map.controls[google.maps.ControlPosition.TOP_RIGHT].push(pendingButton); 
 
 
 
-         function createInfoWindow(marker) {
-            var contentString = '<div><p style="color:black;">Marker info: ' + marker.id + '</p>';
-                if (marker.status !== 'approved') {
-                    contentString += '<button class="popBtn" onclick="approveMarker(\'' + marker.id + '\')">Approve</button>';
-                }
-                contentString += '</div>';
-                var infoWindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
-                return infoWindow;
-            }
-       // Keep track of the currently open info window
-            var openInfoWindow = null;
-            function createInfoWindow(marker) {
-                var contentString = '<div><p style="color:black;">Marker info: ' + marker.marker_info + '</p>';
-          
-
-                if (marker.status === 'pending') {
-                   
-                    contentString += '<button class="popBtn" onclick="approveMarker(\'' + marker.id + '\', this)">Approve</button>';
-
-                } else {
-                    contentString += '<button class="dltBtn" onclick="deleteMarker(\'' + marker.id + '\')">Delete</button>';
-                }
-                contentString += '</div>';
-
-          
-            
-                
-                // Close the currently open info window before opening a new one
-                if (openInfoWindow) {
-                    openInfoWindow.close();
-                }
-                
-                var infoWindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
-                
-                // Set the current info window to the newly opened one
-                openInfoWindow = infoWindow;
-                
-                return infoWindow;
-            }
-	  
+    function createInfoWindow(marker) {
+    var contentString = '<div><p style="color:black;">Marker info: ' + marker.id + '</p>';
+        if (marker.status !== 'approved') {
+            contentString += '<button class="popBtn" onclick="approveMarker(\'' + marker.id + '\')">Approve</button>';
+        }
+        contentString += '</div>';
+        var infoWindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        return infoWindow;
     }
+    // Keep track of the currently open info window
+        var openInfoWindow = null;
+        function createInfoWindow(marker) {
+            var contentString = '<div><p style="color:black;">Marker info: ' + marker.marker_info + '</p>';
+            if (marker.status === 'pending') {
+                contentString += '<button class="popBtn" onclick="approveMarker(\'' + marker.id + '\', this)">Approve</button>';
+
+            } else {
+                contentString += '<button class="dltBtn" onclick="deleteMarker(\'' + marker.id + '\')">Delete</button>';
+            }
+            contentString += '</div>';
+            // Close the currently open info window before opening a new one
+            if (openInfoWindow) {
+                openInfoWindow.close();
+            }
+            var infoWindow = new google.maps.InfoWindow({
+                content: contentString
+            });
+            // Set the current info window to the newly opened one
+            openInfoWindow = infoWindow;
+            return infoWindow;
+        }
+	  
+  }
   </script>
   <script>           
         function approveMarker(markerId, button) {
@@ -243,8 +236,7 @@ function deleteMarker(id) {
 </head>
 <body onload="initMap()">
   <!-- Add map container -->
-  <div id="map" style="height: 500px;"></div>
-  
+  <div id="map" style="height: 800px;"></div>
   <?php
 		if (isset($_GET['msg'])) {
 		echo "<div id='success-msg'>
@@ -252,27 +244,31 @@ function deleteMarker(id) {
 		 </div>";
 		}
     ?>
-
-          <div id="nav-box">
-            <?php
-                if(isset($_SESSION['username'])){
-  
-                echo '<div>';
-                    echo '<span id="welcome-msg">' . $_SESSION['username'] . '</span>';
-                    echo '<a href="admin_logout.php" id="logout-btn">Logout</a>';
-                echo '</div>';
-
-                }
-            ?>
+    <div id="nav-box">
+        <a href="#">
+          <img src="img/profile.webp" alt>
+        </a>
+        <div class="logout-popup">
+          <button type="submit" class="lg-btn">
+               <a href="admin_logout.php"> Log Out<i class="fa fa-sign-out"></i></a>
+         </button>
         </div>
-        <div style="margin-left: 220px; margin-top: 50px;">
+    </div>
+    <select id="locationSelect">
+        <option value="" width: 100px>Location</option>
+        <option value="sanfrancisco">San Francisco</option>
+        <option value="newyork">New York</option>
+        <option value="losangeles">Los Angeles</option>
+    </select>
 
-
-
- <!-- the rest of your website content goes here -->
-        </div>
-
-
-  
+    <div id="search-bar">
+        <form action="user.php" class="form">
+        <input type="search" placeholder="Seach..." required>
+        <button type="submit" class="search-btn">
+            <i class="fa fa-search"></i>
+            
+        </button>
+        </form>
+   </div> 
 </body>
 </html>
